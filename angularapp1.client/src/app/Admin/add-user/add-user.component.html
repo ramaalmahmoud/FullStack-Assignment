@@ -1,0 +1,34 @@
+<div class="container mt-5">
+  <h2>Add New User</h2>
+  <form (ngSubmit)="onAddUser()">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" id="name" class="form-control" [(ngModel)]="name" name="Name" required />
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" id="email" class="form-control" [(ngModel)]="email" name="Email" required />
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" id="password" class="form-control" [(ngModel)]="password" name="Password" required />
+    </div>
+    <div class="mb-3">
+      <label for="role" class="form-label">Role</label>
+      <select id="role" class="form-select" [(ngModel)]="role" name="Role" required>
+        <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="status" class="form-label">Status</label>
+      <select id="status" class="form-select" [(ngModel)]="status" name="Status" required>
+        <option value="1">Active</option>
+        <option value="0">Inactive</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Add User</button>
+  </form>
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+    {{ errorMessage }}
+  </div>
+</div>

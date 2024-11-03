@@ -1,0 +1,31 @@
+<div class="container mt-5">
+  <h2>Manage Users</h2>
+  <button class="btn btn-primary mb-3" (click)="openAddUserModal()">Add New User</button>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.id }}</td>
+        <td>{{user.name}}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.userRoles }}</td>
+        <td>{{ user.status ? 'Active' : 'Inactive' }}</td>
+        <td>
+          <button class="btn btn-info btn-sm" (click)="viewUser(user.id)">View</button>
+          <button class="btn btn-warning btn-sm" (click)="editUser(user.id)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
