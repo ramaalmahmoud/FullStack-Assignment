@@ -50,6 +50,10 @@ public partial class MyDbContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK__Tasks__3214EC072C015204");
 
+            entity.Property(e => e.DueDate).HasColumnType("datetime");
+            entity.Property(e => e.Status)
+                .HasMaxLength(50)
+                .HasDefaultValue("Pending");
             entity.Property(e => e.Title).HasMaxLength(200);
 
             entity.HasOne(d => d.AssignedUser).WithMany(p => p.Tasks)

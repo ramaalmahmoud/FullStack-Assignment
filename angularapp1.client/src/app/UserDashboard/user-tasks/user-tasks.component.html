@@ -1,0 +1,29 @@
+<div class="container mt-5">
+  <h2>My Assigned Tasks</h2>
+  <table class="table table-striped mt-3" *ngIf="tasks && tasks.length > 0; else noTasks">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Due Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of tasks">
+        <td>{{ task.title }}</td>
+        <td>{{ task.description }}</td>
+        <td>{{ task.status }}</td>
+        <td>{{ task.dueDate | date }}</td>
+        <td>
+          <button class="btn btn-primary btn-sm" (click)="viewTask(task)">View</button>
+          <button class="btn btn-success btn-sm" (click)="markComplete(task)" *ngIf="task.status !== 'Completed'">Mark Complete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #noTasks>
+    <p>No tasks assigned to you.</p>
+  </ng-template>
+</div>

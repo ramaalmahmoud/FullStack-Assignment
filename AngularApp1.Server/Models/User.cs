@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace AngularApp1.Server.Models;
 
@@ -22,6 +23,7 @@ public partial class User
     public int? Status { get; set; }
 
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
+    [JsonIgnore]
 
     public virtual ICollection<Task> Tasks { get; set; } = new List<Task>();
 }

@@ -13,6 +13,10 @@ public partial class Task
 
     public int? AssignedUserId { get; set; }
 
+    public string Status { get; set; } = null!;
+
+    public DateTime? DueDate { get; set; }
+
     public virtual User? AssignedUser { get; set; }
 
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();

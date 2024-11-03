@@ -13,6 +13,10 @@ import { SideBarComponent } from './UserDashboard/side-bar/side-bar.component';
 import { UserProfileComponent } from './UserDashboard/user-profile/user-profile.component';
 import { AddUserComponent } from './Admin/add-user/add-user.component';
 import { UpdateUserComponent } from './Admin/update-user/update-user.component';
+import { TasksListsComponent } from './Admin/tasks-lists/tasks-lists.component';
+import { AddTaskComponent } from './Admin/add-task/add-task.component';
+import { EditTaskComponent } from './Admin/edit-task/edit-task.component';
+import { UserTasksComponent } from './UserDashboard/user-tasks/user-tasks.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +27,11 @@ import { UpdateUserComponent } from './Admin/update-user/update-user.component';
     SideBarComponent,
     UserProfileComponent,
     AddUserComponent,
-    UpdateUserComponent
+    UpdateUserComponent,
+    TasksListsComponent,
+    AddTaskComponent,
+    EditTaskComponent,
+    UserTasksComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
@@ -40,6 +48,10 @@ import { UpdateUserComponent } from './Admin/update-user/update-user.component';
           { path: "manageusers", component: ManageUserComponent },
           { path: "add-user", component: AddUserComponent },
           { path: 'update-user/:id', component: UpdateUserComponent },
+          { path: "tasks-list", component: TasksListsComponent },
+          { path: "add-task", component: AddTaskComponent },
+          { path: "edit-task/:id", component: EditTaskComponent }
+
 
         ]
 
@@ -51,7 +63,7 @@ import { UpdateUserComponent } from './Admin/update-user/update-user.component';
         children: [
 
           { path: "UserProfile", component: UserProfileComponent },
-
+          { path: "assignedTasks", component: UserTasksComponent }
         ]
 
       },
