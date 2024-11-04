@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { URLService } from '../../Services/url.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-tasks',
@@ -11,7 +11,7 @@ export class UserTasksComponent {
   tasks: any[] = [];
   userId!: number; // Use the non-null assertion operator
 
-  constructor(private taskService: URLService, private route: ActivatedRoute) { }
+  constructor(private taskService: URLService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     debugger
@@ -34,12 +34,22 @@ export class UserTasksComponent {
   }
 
   viewTask(task: any): void {
-    // Logic for viewing task details
-  }
+    debugger
+    this.router.navigate(['/user/viewTask', task.id]);
 
+  }
+  onStatusChange(task: any): void {
+    this.taskService.updateTaskStatus(task.id, task.status).subscribe({
+      next: () => {
+        console.log(`Task status updated to ${task.status}`);
+      },
+      error: (error) => {
+        console.error('Error updating task status:', error);
+      }
+    });
+  }
   markComplete(task: any): void {
-    //this.taskService.markTaskComplete(task.id, this.userId).subscribe(() => {
-    //  task.status = 'Completed';
-    //});
+    task.status = 'Completed';
+    this.onStatusChange(task);
   }
 }

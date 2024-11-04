@@ -14,7 +14,14 @@
       <tr *ngFor="let task of tasks">
         <td>{{ task.title }}</td>
         <td>{{ task.description }}</td>
-        <td>{{ task.status }}</td>
+        <td>
+          <!-- Dropdown to change task status -->
+          <select [(ngModel)]="task.status" (change)="onStatusChange(task)">
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </td>
         <td>{{ task.dueDate | date }}</td>
         <td>
           <button class="btn btn-primary btn-sm" (click)="viewTask(task)">View</button>

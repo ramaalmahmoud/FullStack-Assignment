@@ -91,4 +91,33 @@ export class URLService {
   getAssignedTasks(userId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/Tasks/GetUserTasks/${userId}`);
   }
+
+  updateTaskStatus(taskId: number, status: string): Observable<any> {
+    const updateData = { status };
+    return this.http.put<any>(`${this.apiUrl}/Tasks/UpdateTaskStatus/${taskId}`, updateData);
+  }
+
+  getTaskDetails(taskId: number): Observable<any> {
+    debugger
+    return this.http.get<any>(`${this.apiUrl}/Tasks/GetTaskDetails/${taskId}`);
+  }
+
+  addComment(commentData: { taskId: number; userId: number; content: string }): Observable<any> {
+    debugger
+    return this.http.post<any>(`${this.apiUrl}/Tasks/AddComment`, commentData);
+  }
+  getUserProfile(userId: number): Observable<any> {
+    debugger
+    return this.http.get(`${this.apiUrl}/Users/GetUserProfile/${userId}`);
+  }
+
+  getAdminProfile(adminId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/Users/GetAdminProfile/${adminId}`);
+  }
+
+  // Update Profile
+  updateProfile(userId: number, profileData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/Users/UpdateProfile/${userId}`, profileData);
+  }
+
 }

@@ -17,6 +17,7 @@ import { TasksListsComponent } from './Admin/tasks-lists/tasks-lists.component';
 import { AddTaskComponent } from './Admin/add-task/add-task.component';
 import { EditTaskComponent } from './Admin/edit-task/edit-task.component';
 import { UserTasksComponent } from './UserDashboard/user-tasks/user-tasks.component';
+import { ViewTaskComponent } from './UserDashboard/view-task/view-task.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { UserTasksComponent } from './UserDashboard/user-tasks/user-tasks.compon
     TasksListsComponent,
     AddTaskComponent,
     EditTaskComponent,
-    UserTasksComponent
+    UserTasksComponent,
+    ViewTaskComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
@@ -63,7 +65,8 @@ import { UserTasksComponent } from './UserDashboard/user-tasks/user-tasks.compon
         children: [
 
           { path: "UserProfile", component: UserProfileComponent },
-          { path: "assignedTasks", component: UserTasksComponent }
+          { path: "assignedTasks", component: UserTasksComponent },
+          { path: "viewTask/:id", component: ViewTaskComponent }
         ]
 
       },

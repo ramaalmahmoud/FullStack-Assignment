@@ -1,10 +1,12 @@
 ﻿using AngularApp1.Server.DTO;
 using AngularApp1.Server.Models;
 using AngularApp1.Server.Services;
+using Azure.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace AngularApp1.Server.Controllers
 {
@@ -153,6 +155,100 @@ namespace AngularApp1.Server.Controllers
 
             return Ok(user);
         }
+        [HttpGet("GetUserProfile/{userId}")]
+        public async Task<IActionResult> GetUserProfile(int userId)
+        {
+            var user = await _db.Users.FindAsync(userId);
+            if (user == null)
+            {
+                return NotFound(new { message = "User not found." });
+            }
+
+            return Ok(user);
+        }
+
+
+        [HttpGet("GetAdminProfile/{adminId}")]
+        public async Task<IActionResult> GetAdminProfile(int adminId)
+        {
+            var admin = await _db.Users.FindAsync(adminId);
+            if (admin == null || admin.UserRoles != "Admin")
+            {
+                return NotFound(new { message = "Admin not found." });
+            }
+
+            return Ok(admin);
+        }
+
+
+
+        [HttpPut("UpdateProfile/{userId}")]
+        public async Task<IActionResult> UpdateProfile(int userId, [FromForm] UpdateProfileRequest model)
+        {
+            // Check if the model is provided
+            if (model == null)
+            {
+                return BadRequest("User data is required.");
+            }
+
+            // Find the user in the database
+            var user = await _db.Users.FindAsync(userId);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            // Verify the old password if provided
+            if (!string.IsNullOrEmpty(model.OldPassword))
+            {
+                bool isOldPasswordValid = PasswordHasher.VerifyPasswordHash(model.OldPassword,
+                    Convert.FromBase64String(user.HashedPassword),
+                    Convert.FromBase64String(user.SaltPassword));
+
+                if (!isOldPasswordValid)
+                {
+                    return BadRequest(new { message = "Old password is incorrect." });
+                }
+            }
+
+            // Update user fields, checking for changes
+            if (!string.IsNullOrWhiteSpace(model.Name))
+            {
+                user.Name = model.Name??user.Name;
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.Email))
+            {
+                // Check for duplicate email in the database
+                var existingUserWithEmail = await _db.Users
+                    .FirstOrDefaultAsync(u => u.Email == model.Email && u.Id != userId);
+
+                if (existingUserWithEmail != null)
+                {
+                    return BadRequest(new { message = "Email is already in use by another account." });
+                }
+
+                user.Email = model.Email??user.Email;
+            }
+
+            // Check if a new password is provided and update it
+            if (!string.IsNullOrWhiteSpace(model.NewPassword))
+            {
+                byte[] passwordHash, passwordSalt;
+                PasswordHasher.CreatePasswordHash(model.NewPassword, out passwordHash, out passwordSalt);
+                user.HashedPassword = Convert.ToBase64String(passwordHash); // Update hash
+                user.SaltPassword = Convert.ToBase64String(passwordSalt);   // Update salt
+                user.Password=model.NewPassword??user.Name;
+            }
+
+            _db.Users.Update(user);
+
+            // Save changes to the database
+            await _db.SaveChangesAsync();
+
+            return Ok(user);
+        }
+
 
 
     }
