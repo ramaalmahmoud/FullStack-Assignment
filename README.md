@@ -21,10 +21,8 @@ Task Comments: Users can add comments on tasks assigned to them.
 Users can view and update their personal details (name, email, and password).
 Passwords are encrypted and stored securely.
 Email addresses must be unique.
-5. Real-Time Notifications (Advanced Feature)
-Notifications are shown in real-time for task assignments, status changes, comments, and user management changes using WebSockets.
-Notifications can be marked as read or unread.
-6. Activity Log (Audit Trail)
+
+5. Activity Log (Audit Trail)
 Admin can view logs for key actions (login, task creation, user management, etc.).
 Tech Stack
 Frontend: Angular, Bootstrap
@@ -35,7 +33,7 @@ Installation
 1. Clone the Repository
 bash
 Copy code
-git clone https://github.com/your-username/user-task-management-system.git
+git clone(https://github.com/ramaalmahmoud/FullStack-Assignment.git)
 cd user-task-management-system
 2. Backend Setup (.NET Core)
 Prerequisites:
@@ -75,7 +73,6 @@ Login Page: Use the login form to authenticate as either an Admin or User.
 Admin Dashboard: Admin can manage users, tasks, and view statistics.
 User Dashboard: Users can view and update the status of their assigned tasks.
 Profile Page: Both Admin and Users can update their personal details.
-Real-Time Notifications: Notifications will appear in the UI for task assignments, task status changes, and more.
 Running the Application
 Run the Backend: Ensure your .NET Core Web API is running (by running dotnet run).
 Run the Frontend: Ensure the Angular development server is running (by running ng serve).
