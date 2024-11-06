@@ -1,8 +1,8 @@
-User and Task Management System
-Overview
+**User and Task Management System**
+**Overview**
 This project is a user and task management system built using Angular (Frontend), .NET (Backend), and Bootstrap (UI Framework). It features role-based access control, where users can log in as either an Admin or a User. The Admin can manage users, tasks, and view statistics, while Users can only access tasks assigned to them. It also includes features like task comments, profile management, and notifications.
 
-Features
+**Features**
 1. User Login and Role-Based Access Control
 Users can log in with a username and password.
 Two roles: Admin and User.
@@ -29,7 +29,19 @@ Frontend: Angular, Bootstrap
 Backend: .NET Core (Web API)
 Database: SQL Server
 Authentication: JWT (JSON Web Tokens) for session management
-Installation
+
+## Task Management
+
+I used **Trello** to manage the tasks and milestones for this project. You can view the detailed task management board and progress using the link below:
+
+[Trello Board Link](https://trello.com/invite/b/67248912eacaa888a2d01746/ATTI61f104f5bee6b84bf20d849eb10f3499264781BB/full-stack-web-assignment))
+
+The board includes various lists such as:
+- **To Do**: Tasks that need to be started.
+- **In Progress**: Tasks that are being worked on.
+- **Completed**: Finished tasks.
+
+**Installation**
 1. Clone the Repository
 bash
 Copy code
@@ -68,7 +80,7 @@ Copy code
 ng serve
 The application will be available at http://localhost:4200.
 
-Usage
+**Usage**
 Login Page: Use the login form to authenticate as either an Admin or User.
 Admin Dashboard: Admin can manage users, tasks, and view statistics.
 User Dashboard: Users can view and update the status of their assigned tasks.
