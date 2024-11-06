@@ -1,5 +1,6 @@
 ﻿using AngularApp1.Server.DTO;
 using AngularApp1.Server.Models;
+using AngularApp1.Server.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,9 +12,11 @@ namespace AngularApp1.Server.Controllers
     public class TasksController : ControllerBase
     {
         private readonly MyDbContext _db;
-        public TasksController(MyDbContext db)
+        private readonly ActivityLoggingService _logger;
+        public TasksController(MyDbContext db, ActivityLoggingService logger)
         {
             _db = db;
+            _logger = logger;
         }
        
         [HttpPost("CreateTask")]
@@ -112,6 +115,7 @@ namespace AngularApp1.Server.Controllers
 
             // Update the status of the task
             task.Status = updateDto.Status;
+            _logger.LogActivityAsync("Task {TaskId} updated by {UserId} at {Time}.", taskId);
 
             // Save the changes to the database
             await _db.SaveChangesAsync();

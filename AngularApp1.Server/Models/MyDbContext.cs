@@ -15,6 +15,8 @@ public partial class MyDbContext : DbContext
     {
     }
 
+    public virtual DbSet<ActivityLog> ActivityLogs { get; set; }
+
     public virtual DbSet<Comment> Comments { get; set; }
 
     public virtual DbSet<Task> Tasks { get; set; }
@@ -27,6 +29,19 @@ public partial class MyDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<ActivityLog>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Activity__3214EC076E447EDB");
+
+            entity.Property(e => e.Action)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Timestamp).HasDefaultValueSql("(getutcdate())");
+            entity.Property(e => e.UserId)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<Comment>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Comments__3214EC07701DFEF6");

@@ -16,16 +16,24 @@
           <h2 class="text-center mt-3">Dashboard</h2>
           <ul class="nav flex-column mt-4">
             <li class="nav-item">
+              <a class="nav-link" routerLink="/dashboard/Overview">Overview</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link active" routerLink="/dashboard/manageusers">User Management</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" routerLink="/dashboard/tasks-list">Task Management</a>
             </li>
+
             <li class="nav-item">
-              <a class="nav-link" href="/profile">Profile</a>
+              <a class="nav-link" routerLink="/dashboard/AdminProfile">Profile</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-danger" href="/logout">Logout</a>
+              <a class="nav-link" routerLink="/dashboard/ActivityLogs">Activity Logs</a>
+            </li>
+         
+            <li class="nav-item">
+            <a class="dropdown-item" href="#" (click)="logout()">Sign out</a>
             </li>
           </ul>
         </div>

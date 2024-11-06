@@ -1,0 +1,25 @@
+<div class="container mt-5">
+  <h2>Task Details</h2>
+  <p><strong>Title:</strong> {{ task?.title }}</p>
+  <p><strong>Description:</strong> {{ task?.description }}</p>
+  <p><strong>User:</strong> {{ task?.assignedUser }}</p>
+
+  <p><strong>Status:</strong> {{ task?.status }}</p>
+  <p><strong>Due Date:</strong> {{ task?.dueDate | date }}</p>
+
+  <hr>
+
+  <h3>Comments</h3>
+  <ul class="list-group">
+    <li *ngFor="let comment of comments" class="list-group-item">
+      <p>{{ comment.content }}</p>
+      <small class="text-muted">{{ comment.createdAt | date: 'short' }}</small>
+    </li>
+  </ul>
+
+  <div class="mt-4">
+    <h4>Add a Comment</h4>
+    <textarea [(ngModel)]="newComment" class="form-control" rows="3" placeholder="Enter your comment"></textarea>
+    <button (click)="addComment()" class="btn btn-primary mt-2">Post Comment</button>
+  </div>
+</div>

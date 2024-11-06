@@ -24,19 +24,27 @@ export class LoginComponent {
      
       next: (response) => {
         console.log("userroles", response.userRoles)
-        // Ensure UserRoles is an array and contains the expected roles
-        if (response.userRoles[0]==='Admin') {
-          this._ser.saveAuthData(response.token, response.userRoles[0], response.userId); // Save auth data
+        console.log("userroles", response)
 
-          this.router.navigate(['/dashboard/manageusers']);
+      
+        if (response.userRoles[0]==='Admin') {
+          this._ser.saveAuthData(response.token, response.userRoles[0], response.userId);
+
+          this.router.navigate(['/dashboard/Overview']);
         } else if (response.userRoles[0] === 'User') {
-          this._ser.saveAuthData(response.token, response.userRoles[0], response.userId); // Save auth data
+          this._ser.saveAuthData(response.token, response.userRoles[0], response.userId); // Save  data
 
           this.router.navigate(['/user/UserProfile']);
         } else {
           this.errorMessage = 'You do not have permission to access the dashboard.';
         }
+        debugger
+        if (response.forcePasswordChange) {
+          alert("you need to change password")
+
+        }
       },
+
       error: (err) => {
         this.errorMessage = 'Invalid email or password.';
       }

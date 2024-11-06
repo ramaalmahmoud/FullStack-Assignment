@@ -34,7 +34,7 @@ export class UpdateUserComponent {
         this.email = user.email;
         this.password=user.password
         this.role = user.userRoles;
-        this.status = user.status; // Assuming status is 1 for active
+        this.status = user.status;
       },
       error: (err) => {
         this.errorMessage = 'Error loading user details: ' + err.message;
@@ -46,13 +46,13 @@ export class UpdateUserComponent {
     const userData = new FormData();
     userData.append('Name', this.name);
     userData.append('Email', this.email);
-    userData.append('Password', this.password); // If you want to allow password updates
+    userData.append('Password', this.password); 
     userData.append('Role', this.role);
     userData.append('Status', this.status.toString());
 
     this._ser.updateUser(this.id, userData).subscribe({
       next: () => {
-        // Redirect back to manage users after successful update
+      
         this.router.navigate(['/dashboard/manageusers']);
       },
       error: (err) => {

@@ -2,6 +2,7 @@
 using AngularApp1.Server.Models;
 using AngularApp1.Server.Services;
 using Azure.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,11 +17,13 @@ namespace AngularApp1.Server.Controllers
     {
         private readonly MyDbContext _db;
         private readonly TokenGenerator _tokenGenerator;
+        private readonly ActivityLoggingService _logger;
 
-        public UsersController(MyDbContext db, TokenGenerator tokenGenerator)
+        public UsersController(MyDbContext db, TokenGenerator tokenGenerator, ActivityLoggingService logger)
         {
             _db = db;
             _tokenGenerator = tokenGenerator;
+            _logger = logger;
         }
         [HttpPost("login")]
         public IActionResult Login([FromForm] loginUserDTO model)
@@ -39,12 +42,14 @@ namespace AngularApp1.Server.Controllers
             {
                 return Unauthorized("Invalid username or password.");
             }
+            bool forcePasswordChange = user.Password == "defaultPassword"; 
 
             // Step 3: Retrieve the role(s) from the UserRoles column
             var roles = user.UserRoles.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
             // Step 4: Generate a token
             var token = _tokenGenerator.GenerateToken(user.Name, roles);
+            _logger.LogActivityAsync("Login", user.Id);
 
             // Step 5: Return the token and user information
             return Ok(new
@@ -52,7 +57,9 @@ namespace AngularApp1.Server.Controllers
                 Token = token,
                 UserId = user.Id,
                 UserRoles = roles,
-                Status = user.Status
+                Status = user.Status,
+                        ForcePasswordChange = forcePasswordChange 
+
             });
         }
 
@@ -78,12 +85,15 @@ namespace AngularApp1.Server.Controllers
                 HashedPassword = Convert.ToBase64String(passwordHash), // Convert hash to base64
                 SaltPassword = Convert.ToBase64String(passwordSalt) // Convert salt to base64
             };
+            var u = new User();
+            _logger.LogActivityAsync(" deleted user.", u.Id);
 
             _db.Users.Add(user);
             await _db.SaveChangesAsync();
 
             return Ok(user);
         }
+      
         // Task 2: Get All Users
         [HttpGet("GetAllUsers")]
         public async Task<IActionResult> GetAllUsers()
@@ -113,8 +123,10 @@ namespace AngularApp1.Server.Controllers
             }
 
             _db.Users.Remove(user);
-            await _db.SaveChangesAsync();
+           
 
+            await _db.SaveChangesAsync();
+            _logger.LogActivityAsync(" deleted user.", id);
             return NoContent();
         }
 
@@ -183,7 +195,7 @@ namespace AngularApp1.Server.Controllers
 
 
         [HttpPut("UpdateProfile/{userId}")]
-        public async Task<IActionResult> UpdateProfile(int userId, [FromForm] UpdateProfileRequest model)
+        public async Task<IActionResult> UpdateProfile(int userId, [FromBody] UpdateProfileRequest model)
         {
             // Check if the model is provided
             if (model == null)

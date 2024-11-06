@@ -30,7 +30,7 @@ export class AddTaskComponent {
     );
   }
   onSubmit(): void {
-    debugger
+    
     const formData = new FormData();
     formData.append('Title', this.title);
     formData.append('Description', this.description);
@@ -43,11 +43,11 @@ export class AddTaskComponent {
       formData.append('DueDate', parsedDate.toISOString());
     }
 
-    debugger
+    
 
     this.taskService.createTask(formData).subscribe({
       next: (data) => {
-        console.log('Task created successfully', data);
+        alert('Task created successfully');
         this.router.navigate(['/dashboard/tasks-list']);
       },
       error: (err) => {

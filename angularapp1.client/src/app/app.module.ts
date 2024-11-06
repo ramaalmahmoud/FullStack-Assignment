@@ -1,4 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'; // Add this line
@@ -18,6 +20,10 @@ import { AddTaskComponent } from './Admin/add-task/add-task.component';
 import { EditTaskComponent } from './Admin/edit-task/edit-task.component';
 import { UserTasksComponent } from './UserDashboard/user-tasks/user-tasks.component';
 import { ViewTaskComponent } from './UserDashboard/view-task/view-task.component';
+import { AdminProfileComponent } from './Admin/admin-profile/admin-profile.component';
+import { ActivityLogComponent } from './Admin/activity-log/activity-log.component';
+import { OverviewComponent } from './Admin/overview/overview.component';
+import { TaskDetailsComponent } from './Admin/task-details/task-details.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +39,11 @@ import { ViewTaskComponent } from './UserDashboard/view-task/view-task.component
     AddTaskComponent,
     EditTaskComponent,
     UserTasksComponent,
-    ViewTaskComponent
+    ViewTaskComponent,
+    AdminProfileComponent,
+    ActivityLogComponent,
+    OverviewComponent,
+    TaskDetailsComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
@@ -46,13 +56,16 @@ import { ViewTaskComponent } from './UserDashboard/view-task/view-task.component
         path: "dashboard",
         component: DashboardComponent,
         children: [
-
+          { path: "AdminProfile", component: AdminProfileComponent },
+          { path: "ActivityLogs", component: ActivityLogComponent },
           { path: "manageusers", component: ManageUserComponent },
+          { path: "Overview", component: OverviewComponent },
           { path: "add-user", component: AddUserComponent },
           { path: 'update-user/:id', component: UpdateUserComponent },
           { path: "tasks-list", component: TasksListsComponent },
           { path: "add-task", component: AddTaskComponent },
-          { path: "edit-task/:id", component: EditTaskComponent }
+          { path: "edit-task/:id", component: EditTaskComponent },
+          { path: "view-task/:id", component: TaskDetailsComponent }
 
 
         ]

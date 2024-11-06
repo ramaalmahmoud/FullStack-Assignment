@@ -21,6 +21,7 @@ export class AddUserComponent {
   constructor(private _ser: URLService, private router: Router) { }
 
   onAddUser(): void {
+    debugger
     const userData = new FormData();
     userData.append('Name', this.name);
     userData.append('Email', this.email);
@@ -30,7 +31,6 @@ export class AddUserComponent {
 
     this._ser.addUser(userData).subscribe({
       next: () => {
-        // Redirect back to manage users after successful addition
         this.router.navigate(['/dashboard/manageusers']);
       },
       error: (err) => {

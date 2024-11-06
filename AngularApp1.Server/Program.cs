@@ -13,6 +13,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddLogging(configure => configure.AddConsole()); // You can also add other loggers like File, Debug, etc.
+
 // Add services to the container.
 builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -27,6 +29,7 @@ options.AddPolicy("development", builder =>
 );
 // Register TokenGenerator as a singleton or transient service
 builder.Services.AddSingleton<TokenGenerator>(); // or .AddTransient<TokenGenerator>()
+builder.Services.AddScoped<ActivityLoggingService>();
 
 // Retrieve JWT settings from configuration
 var jwtSettings = builder.Configuration.GetSection("Jwt");
@@ -55,7 +58,7 @@ builder.Services.AddAuthentication(options =>
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"], // Correct this line
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
@@ -79,7 +82,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

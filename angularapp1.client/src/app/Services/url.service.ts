@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -38,7 +38,7 @@ export class URLService {
 
   // Added method to retrieve the user ID from local storage
   getUserId(): number | null {
-    debugger
+    
     const userId = localStorage.getItem('userId');
     return userId ? parseInt(userId, 10) : null; // Convert to number or return null
   }
@@ -64,7 +64,7 @@ export class URLService {
 
   // Delete user
   deleteUser(userId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/Users/${userId}`);
+    return this.http.delete(`${this.apiUrl}/Users/DeleteUser/${userId}`);
   }
 
   // Create a task
@@ -99,15 +99,16 @@ export class URLService {
 
   getTaskDetails(taskId: number): Observable<any> {
     debugger
+    
     return this.http.get<any>(`${this.apiUrl}/Tasks/GetTaskDetails/${taskId}`);
   }
 
   addComment(commentData: { taskId: number; userId: number; content: string }): Observable<any> {
-    debugger
+    
     return this.http.post<any>(`${this.apiUrl}/Tasks/AddComment`, commentData);
   }
   getUserProfile(userId: number): Observable<any> {
-    debugger
+    
     return this.http.get(`${this.apiUrl}/Users/GetUserProfile/${userId}`);
   }
 
@@ -117,7 +118,30 @@ export class URLService {
 
   // Update Profile
   updateProfile(userId: number, profileData: any): Observable<any> {
+    debugger
     return this.http.put(`${this.apiUrl}/Users/UpdateProfile/${userId}`, profileData);
   }
 
+
+  getActivityLogs(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/Activity/activity-logs`);
+  }
+
+  getDashboardOverview(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/Activity/overview` );
+  }
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const cloned = req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return next.handle(cloned);
+    } else {
+      return next.handle(req);
+    }
+  }
 }

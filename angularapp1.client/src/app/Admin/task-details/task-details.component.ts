@@ -3,14 +3,14 @@ import { ActivatedRoute } from '@angular/router';
 import { URLService } from '../../Services/url.service';
 
 @Component({
-  selector: 'app-view-task',
-  templateUrl: './view-task.component.html',
-  styleUrl: './view-task.component.css'
+  selector: 'app-task-details',
+  templateUrl: './task-details.component.html',
+  styleUrl: './task-details.component.css'
 })
-export class ViewTaskComponent {
-  task: any;  
-  comments: any[] = []; 
-  newComment: string = ''; 
+export class TaskDetailsComponent {
+  task: any;
+  comments: any[] = [];
+  newComment: string = '';
 
   constructor(private route: ActivatedRoute, private taskService: URLService) { }
 
@@ -20,12 +20,11 @@ export class ViewTaskComponent {
   }
 
   loadTaskDetails(taskId: number): void {
-    debugger
     this.taskService.getTaskDetails(taskId).subscribe({
       next: (response) => {
-        console.log('API response:', response); 
+        console.log('API response:', response);
         this.task = response;
-        this.comments = response.comments; 
+        this.comments = response.comments;
         console.log('Task:', this.task);
         console.log('Comments:', this.comments);
       },

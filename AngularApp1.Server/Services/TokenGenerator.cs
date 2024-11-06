@@ -18,26 +18,40 @@ namespace AngularApp1.Server.Services
         {
             var jwtSettings = _configuration.GetSection("Jwt");
             var key = jwtSettings.GetValue<string>("Key");
+            var issuer = jwtSettings.GetValue<string>("Issuer");
+            var audience = jwtSettings.GetValue<string>("Audience");
+
+            if (string.IsNullOrEmpty(key))
+            {
+                throw new ArgumentNullException("JWT Key cannot be null or empty.");
+            }
+
             var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, username)
-        };
+            {
+                new Claim(ClaimTypes.Name, username)  // User's username
+            };
 
-            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+            // Add roles as claims
+            if (roles != null && roles.Any())
+            {
+                claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+            }
 
+            // Signing key
             var keyBytes = Encoding.UTF8.GetBytes(key);
             var signingKey = new SymmetricSecurityKey(keyBytes);
             var creds = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: jwtSettings.GetValue<string>("Issuer"),
-                audience: jwtSettings.GetValue<string>("Audience"),
+                issuer: issuer,
+                audience: audience,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: creds);
+                expires: DateTime.Now.AddMinutes(30), 
+                signingCredentials: creds
+            );
 
+            
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
     }
 }

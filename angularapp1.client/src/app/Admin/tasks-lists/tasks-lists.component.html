@@ -24,6 +24,8 @@
         <td>{{ task.assignedUserId }}</td>
         <td>
           <a [routerLink]="['/dashboard/edit-task', task.id]" class="btn btn-warning btn-sm">Edit</a>
+          <a class="btn btn-primary btn-sm" [routerLink]="['/dashboard/view-task', task.id]" >View</a>
+
         </td>
       </tr>
     </tbody>

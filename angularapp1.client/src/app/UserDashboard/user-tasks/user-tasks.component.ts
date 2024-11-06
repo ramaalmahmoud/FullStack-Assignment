@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class UserTasksComponent {
   tasks: any[] = [];
-  userId!: number; // Use the non-null assertion operator
+  userId!: number; 
 
   constructor(private taskService: URLService, private route: ActivatedRoute, private router: Router) { }
 
@@ -17,9 +17,8 @@ export class UserTasksComponent {
     debugger
     const id = this.taskService.getUserId();
     if (id !== null) {
-      this.userId = id; // Assign only if it's a valid number
+      this.userId = id; 
     } else {
-      // Handle the case where userId is null (e.g., redirect to login or show an error)
       console.error('User ID is not available. Please log in again.');
     }
     this.fetchTasks();

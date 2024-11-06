@@ -29,25 +29,26 @@ export class ManageUserComponent {
   }
 
   openAddUserModal(): void {
-    // Logic to open a modal for adding a new user
+   
     this.router.navigate(['dashboard/add-user']);
   }
 
   viewUser(userId: number): void {
-    // Logic to view user details
+    
     this.router.navigate(['/view-user', userId]);
   }
 
   editUser(userId: number): void {
-    // Logic to edit user details
+    
     this.router.navigate(['dashboard/update-user', userId]);
   }
 
   deleteUser(userId: number): void {
+    
     if (confirm('Are you sure you want to delete this user?')) {
       this._ser.deleteUser(userId).subscribe(
         () => {
-          this.loadUsers(); // Refresh the user list after deletion
+          this.loadUsers(); 
         },
         (error) => {
           console.error('Error deleting user:', error);
