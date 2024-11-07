@@ -86,7 +86,7 @@ namespace AngularApp1.Server.Controllers
                 SaltPassword = Convert.ToBase64String(passwordSalt) // Convert salt to base64
             };
             var u = new User();
-            _logger.LogActivityAsync(" deleted user.", u.Id);
+            //_logger.LogActivityAsync(" create user.", u.Id);
 
             _db.Users.Add(user);
             await _db.SaveChangesAsync();
