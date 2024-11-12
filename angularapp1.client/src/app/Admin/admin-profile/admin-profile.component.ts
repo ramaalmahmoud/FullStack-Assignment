@@ -14,7 +14,7 @@ export class AdminProfileComponent {
 
   ngOnInit(): void {
     
-    const userId = this.profileService.getUserId() // Get from local storage or other source
+    const userId = this.profileService.getUserId() 
     if (userId) {
       this.profileService.getAdminProfile(userId).subscribe(
         (data) => {

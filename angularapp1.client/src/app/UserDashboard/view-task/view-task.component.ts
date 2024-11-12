@@ -20,7 +20,7 @@ export class ViewTaskComponent {
   }
 
   loadTaskDetails(taskId: number): void {
-    debugger
+    
     this.taskService.getTaskDetails(taskId).subscribe({
       next: (response) => {
         console.log('API response:', response); 

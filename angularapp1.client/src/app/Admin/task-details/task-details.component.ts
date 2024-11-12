@@ -34,7 +34,7 @@ export class TaskDetailsComponent {
 
 
   addComment(): void {
-    debugger
+    
     const commentData = {
       taskId: this.task.id,
       content: this.newComment,

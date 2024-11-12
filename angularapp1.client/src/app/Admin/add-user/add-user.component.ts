@@ -21,7 +21,7 @@ export class AddUserComponent {
   constructor(private _ser: URLService, private router: Router) { }
 
   onAddUser(): void {
-    debugger
+    
     const userData = new FormData();
     userData.append('Name', this.name);
     userData.append('Email', this.email);

@@ -38,7 +38,7 @@ export class LoginComponent {
         } else {
           this.errorMessage = 'You do not have permission to access the dashboard.';
         }
-        debugger
+        
         if (response.forcePasswordChange) {
           alert("you need to change password")
 

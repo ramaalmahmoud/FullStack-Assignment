@@ -13,7 +13,7 @@ export class UserProfileComponent {
   constructor(private profileService: URLService) { }
 
   ngOnInit(): void {
-    debugger
+    
     const userId = this.profileService.getUserId() 
     if (userId) {
       this.profileService.getUserProfile(userId).subscribe(

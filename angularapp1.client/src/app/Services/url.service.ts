@@ -98,7 +98,7 @@ export class URLService {
   }
 
   getTaskDetails(taskId: number): Observable<any> {
-    debugger
+    
     
     return this.http.get<any>(`${this.apiUrl}/Tasks/GetTaskDetails/${taskId}`);
   }
@@ -118,7 +118,7 @@ export class URLService {
 
   // Update Profile
   updateProfile(userId: number, profileData: any): Observable<any> {
-    debugger
+    
     return this.http.put(`${this.apiUrl}/Users/UpdateProfile/${userId}`, profileData);
   }
 

@@ -14,7 +14,7 @@ export class UserTasksComponent {
   constructor(private taskService: URLService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    debugger
+    
     const id = this.taskService.getUserId();
     if (id !== null) {
       this.userId = id; 
@@ -25,7 +25,7 @@ export class UserTasksComponent {
   }
 
   fetchTasks(): void {
-    debugger
+    
     this.taskService.getAssignedTasks(this.userId).subscribe(
       (data) => this.tasks = data,
       (error) => console.error('Error fetching tasks', error)
@@ -33,7 +33,7 @@ export class UserTasksComponent {
   }
 
   viewTask(task: any): void {
-    debugger
+    
     this.router.navigate(['/user/viewTask', task.id]);
 
   }
